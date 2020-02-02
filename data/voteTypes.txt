@@ -1,0 +1,5 @@
+
+2->UpMod
+2->DownMod
+15->ModeratorReview
+16->ApproveEditSuggestion
