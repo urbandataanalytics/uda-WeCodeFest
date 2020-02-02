@@ -93,9 +93,8 @@ public class finalStep {
                     .into(TypeDescriptors.strings())
                     .via((KV<Boolean, Integer> input) -> input.getKey().toString()+" -> "+input.getValue().toString())
                 )
-        .apply(ParDo.of(new libs.utils.printElements()));
-/*          .apply(TextIO.write().to("myNumbers"));
- */
+         .apply(TextIO.write().to("myNumbers"));
+ 
         p.run().waitUntilFinish();
     
     
