@@ -1,4 +1,4 @@
-package exercices;
+package resolvedExercice;
 
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
