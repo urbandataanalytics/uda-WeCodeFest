@@ -57,7 +57,7 @@ export JAVA_HOME=directorio_de_instalación
 ```
 En *Windows*, sinceramente, no tengo información de como hacer esto :-(.
 
-A continuación
+A continuación se indica tutoriales concretos para Ubuntu y MacOs.
 
 **¿Cómo instalo todo esto en Ubuntu (y probablemente Debian)?**
 
@@ -117,7 +117,7 @@ Verificamos si Maven apunta a la versión deseada de Java como se ha explicado p
 
 He intentado simplificar la ejecución a través de scripts a los cuales tenemos que pasar como parámetro la *Clase* que queremos ejecutar. Por ejemplo, si fuera la clase *WordsCount* dentro del paquete *resolvedSecondExercise*, dicho parámetro sería **resolvedSecondExercise.WordsCount**.
 
-Recomiendo probar la ejecución, para comprobar que todo está bien, con la clase *HelloWorld* dentro del paquete *example*. Por tanto, el parámetro completo sería **example.HelloWorld**. Si lo ejecutamos, nos saldrá por pantalla lo siguiente:
+Recomiendo probar la ejecución, para comprobar que todo está bien, con la clase *HelloWorld* dentro del paquete *example*. Por tanto, el parámetro completo sería **example.HelloWorld**. Si lo ejecutamos, nos saldrá por pantalla lo siguiente (junto a un montón de Logs):
 ```
 Holi :-)
 ```
@@ -125,14 +125,14 @@ Holi :-)
 Existen dos scripts, cada uno para un método de ejecución (*Con Docker* o *Sin Docker*):
 
 - Con Docker: Si hemos escogido la vía de utilizar Docker, utilizaremos el script **docker_execute.sh**. En Linux, por requisitos de docker, que el script será ejecutado como *superusuario*, por lo que habría que utilizar el comando "sudo" o bien ser el usuario "root".
-Por ejemplo, si queremos ejecutar la clase WordsCount, sería:
+Por ejemplo, si queremos ejecutar la clase HelloWorld, sería:
 ````bash
 bash docker_execute.sh example.HelloWorld
 ````
 ¿Qué hace exactamente este comando? Monta la carpeta actual (que debería ser la del proyecto) en el propio sistema de ficheros del contenedor. Ejecuta una instrucción que compila y ejecuta la clase indicada y, si está programada para tal fin, devuelve los resultados en la misma carpeta.
 
 - Sin Docker: Si hemos optado por la vía de no usar Docker e instalar manualmente todas las dependencias, utilizaremos el script **maven_execute.sh**.
-Por ejemplo, si queremos ejecutar la clase WordsCount, sería:
+Por ejemplo, si queremos ejecutar la clase HelloWorld, sería:
 ````bash
 bash maven_execute.sh example.HelloWorld
 ````
