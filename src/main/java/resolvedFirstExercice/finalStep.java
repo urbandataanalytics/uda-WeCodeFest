@@ -1,4 +1,4 @@
-package example;
+package resolvedFirstExercice;
 
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
@@ -23,7 +23,7 @@ import org.apache.beam.sdk.transforms.Combine.PerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class step6 {
+public class finalStep {
 
     private static class MultiplyBy2AndFilter extends DoFn<Integer, Integer> {
 
@@ -36,16 +36,6 @@ public class step6 {
             if (new_value < 200)
                 context.output(new_value);
         }
-    }
-
-    private static class Pair2String extends DoFn<KV<Boolean, Integer>, String> {
-
-        @ProcessElement
-        public void processElement(ProcessContext context) {
-            KV<Boolean, Integer> value = context.element();
-            context.output(value.getKey().toString()+" -> "+value.getValue().toString());
-        }
-
     }
 
     private static class Value2Pair extends DoFn<Integer, KV<Boolean, Integer>> {
@@ -95,44 +85,16 @@ public class step6 {
 
         Pipeline p = Pipeline.create();
 
-        // Step 1
-        Values<Integer> values = Create.of(20, 60, 80, 120, 50);
-
-        PCollection<Integer> output1 = p.apply(values);
-
-        // Step 2
-        DoFn<Integer, Integer> multiplyBy2AndFilterFunction = new MultiplyBy2AndFilter();
-
-        SingleOutput<Integer, Integer> transformAndFilter = ParDo.of(multiplyBy2AndFilterFunction);
-
-        PCollection<Integer> filteredOutput = output1.apply(transformAndFilter);
-
-        // Step 3
-        DoFn<Integer, KV<Boolean, Integer>> value2Pair = new Value2Pair();
-
-        SingleOutput<Integer, KV<Boolean, Integer>> transform2KV = ParDo.of(value2Pair);
-
-        PCollection<KV<Boolean, Integer>> keyedOutput = filteredOutput.apply(transform2KV);
-
-        // Step 4
-        AverageFn combiner = new AverageFn();
-
-        PerKey<Boolean, Integer, Integer> combineTransform = Combine.<Boolean, Integer, Integer>perKey(combiner);
-
-        PCollection <KV<Boolean, Integer>> combinedOutput = keyedOutput.apply(combineTransform);
-
-        // Step 5
-        DoFn<KV<Boolean, Integer>, String> pair2StringFunction = new Pair2String();
-
-        SingleOutput<KV<Boolean, Integer>, String> castTransform = ParDo.of(pair2StringFunction);
-
-        PCollection<String> string_output = combinedOutput.apply(castTransform);
-
-        // Step 6
-        Write writeTransform = TextIO.write().to("myNumbers");
-
-        string_output.apply(writeTransform);
-
+        p.apply(Create.of(20, 60, 80, 120, 50))
+         .apply(ParDo.of(new MultiplyBy2AndFilter()))
+         .apply(ParDo.of(new Value2Pair()))
+         .apply(Combine.<Boolean, Integer, Integer>perKey(new AverageFn()))
+         .apply(MapElements
+                    .into(TypeDescriptors.strings())
+                    .via((KV<Boolean, Integer> input) -> input.getKey().toString()+" -> "+input.getValue().toString())
+                )
+         .apply(TextIO.write().to("myNumbers"));
+ 
         p.run().waitUntilFinish();
     
     

@@ -1,6 +1,5 @@
-package example;
+package resolvedFirstExercice;
 
-import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.TypeDescriptors;
 import org.apache.beam.sdk.Pipeline;
@@ -19,11 +18,10 @@ import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SimpleFunction;
 import org.apache.beam.sdk.transforms.Combine.CombineFn;
 import org.apache.beam.sdk.transforms.Combine.Globally;
-import org.apache.beam.sdk.transforms.Combine.PerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class finalStep {
+public class step5 {
 
     private static class MultiplyBy2AndFilter extends DoFn<Integer, Integer> {
 
@@ -38,14 +36,12 @@ public class finalStep {
         }
     }
 
-    private static class Value2Pair extends DoFn<Integer, KV<Boolean, Integer>> {
+    private static class Int2String extends DoFn<Integer, String> {
 
         @ProcessElement
         public void processElement(ProcessContext context) {
             Integer value = context.element();
-
-            KV<Boolean, Integer> new_value = KV.of(value > 100, value);
-            context.output(new_value);
+            context.output(value.toString());
         }
 
     }
@@ -83,21 +79,46 @@ public class finalStep {
 
     public static void main(String[] args) {
 
+
+        // Step: Create Pipeline
         Pipeline p = Pipeline.create();
 
-        p.apply(Create.of(20, 60, 80, 120, 50))
-         .apply(ParDo.of(new MultiplyBy2AndFilter()))
-         .apply(ParDo.of(new Value2Pair()))
-         .apply(Combine.<Boolean, Integer, Integer>perKey(new AverageFn()))
-         .apply(MapElements
-                    .into(TypeDescriptors.strings())
-                    .via((KV<Boolean, Integer> input) -> input.getKey().toString()+" -> "+input.getValue().toString())
-                )
-         .apply(TextIO.write().to("myNumbers"));
- 
+        // Step: Read Data
+        Values<Integer> values = Create.of(20, 60, 80, 120, 50);
+
+        PCollection<Integer> output1 = p.apply(values);
+
+        // Step: Multiply and Filter
+        DoFn<Integer, Integer> multiplyBy2AndFilterFunction = new MultiplyBy2AndFilter();
+
+        SingleOutput<Integer, Integer> transformAndFilter = ParDo.of(multiplyBy2AndFilterFunction);
+
+        PCollection<Integer> filteredOutput = output1.apply(transformAndFilter);
+
+        // Step: get KV
+
+        // Step: Get average
+        AverageFn combiner = new AverageFn();
+
+        Globally<Integer, Integer> combineTransform = Combine.globally(combiner).withoutDefaults();
+
+        PCollection<Integer> combinedOutput = filteredOutput.apply(combineTransform);
+
+        // Step: Value to String
+        DoFn<Integer, String> int2StringFunction = new Int2String();
+
+        SingleOutput<Integer, String> castTransform = ParDo.of(int2StringFunction);
+
+        PCollection<String> string_output = combinedOutput.apply(castTransform);
+
+        // Step: Write Data
+        Write writeTransform = TextIO.write().to("myNumbers");
+
+        string_output.apply(writeTransform);
+
+        // Step: Execute Pipeline
         p.run().waitUntilFinish();
-    
-    
+
     }
 
 }

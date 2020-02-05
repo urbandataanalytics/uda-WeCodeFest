@@ -1,4 +1,4 @@
-package example;
+package resolvedFirstExercice;
 
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.Pipeline;
@@ -17,15 +17,41 @@ public class step2 {
 
   public static void main(String[] args) {
 
+
+    // Step: Create Pipeline
     Pipeline p = Pipeline.create();
 
-    //Step 1
+    // Step: Read Data
     Values<Integer> values = Create.of(20, 60, 80, 120, 50);
-
     PCollection<Integer> input = p.apply(values);
 
+    // Step: Multiply and Filter
+
+    // Step: get KV
+
+    // Step: Get average
+
+    // Step: Value to String
+
+    // Step: Write Data
+
+    // Step: Execute Pipeline
+
+    // Step: Read Data
+
+    // Step: Multiply and Filter
+
+    // Step: get KV
+
+    // Step: Get average
+
+    // Step: Value to String
+
+    // Step: Write Data
+
+    // Step: Execute Pipeline
     p.run().waitUntilFinish();
-    
+
   }
 
 }

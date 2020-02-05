@@ -31,13 +31,26 @@ import org.apache.beam.sdk.transforms.Combine.PerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class whatever {
-
-
+public class Exercise1 {
 
     public static void main(String[] args) {
 
-        System.out.println("Holi :-)");
+        // Step: Create Pipeline
+
+        // Step: Read Data
+
+        // Step: Multiply and Filter
+
+        // Step: get KV
+
+        // Step: Get average
+
+        // Step: Value to String
+
+        // Step: Write Data
+
+        // Step: Execute Pipeline
+
     }
 
 }

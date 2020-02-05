@@ -3,7 +3,7 @@ package libs;
 import org.apache.beam.sdk.transforms.DoFn;
 
 
-public class utils {
+public class Utils {
 
 
     public static class printElements extends DoFn<Object, Void> {

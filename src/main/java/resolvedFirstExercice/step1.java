@@ -1,4 +1,4 @@
-package example;
+package resolvedFirstExercice;
 
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
@@ -14,11 +14,23 @@ import org.slf4j.LoggerFactory;
 public class step1 {
 
   public static void main(String[] args) {
-
+    // Step: Create Pipeline
     Pipeline p = Pipeline.create();
 
+    // Step: Read Data
+
+    // Step: Multiply and Filter
+
+    // Step: get KV
+
+    // Step: Get average
+
+    // Step: Value to String
+
+    // Step: Write Data
+
+    // Step: Execute Pipeline
     p.run().waitUntilFinish();
-    
   }
 
 }
