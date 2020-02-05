@@ -138,3 +138,31 @@ bash maven_execute.sh example.HelloWorld
 ````
 
 ¿Qué hace este script? simplemente, compila el proyecto y ejecuta la clase indicada.
+
+
+## Ejercicios
+
+### Ejercicio 1
+
+Este es un ejercicio guiado por pasos. En cada paso se hará una ampliación o cambio.
+
+trabajaremos en el fichero **exercises/Exercise1.java**. se han puesto varios "Steps" como comentarios
+que facilitará el trabajo durante el taller.
+
+Concretamente, el objetivo de este proyecto es el siguiente: Dado un conjunto de números, se multiplicará su valor por 2 y se filtrarán los mayores de 200. A continuación, se agruparán según si su valor es mayor o menor de 100. Es decir, tendremos como resultados dos grupos. A cada grupo, le haremos la media aritmética y escribiremos el resultado en un fichero.
+
+### Ejercicio 2
+
+Este ejercicio se hará más "por libre".
+
+El objetivo es hacer un **WordCount** de las palabras incluídas en el fichero *data/corpus.txt* (que se trata del primer capítulo del Quijote). Sólo se tendrán en cuenta aquellas palabras cuya longitud sea mayor de cinco.
+
+### Pequeña ayuda para los ejercicios
+
+La clase *libs.Utils* incluye otra clase llamada **PrintElements**. Dicha clase extiende de *DoFn* y podremos utilizarla para mostrar todos los elementos de un PCollection (estos conceptos se explican durante el taller :-)). Gracias a esto, será más fácil desarrollar los ejercicios al darnos una "pista" de lo que incluye cada PCollection.
+
+Por ejemplo, si tenemos un PCollection "collectionTest", podemos mostrar su contenido e la siguiente forma:
+
+````java
+collectionTest.apply(ParDo.of(new libs.Utils.PrintElements()));
+````

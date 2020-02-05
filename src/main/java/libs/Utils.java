@@ -6,7 +6,7 @@ import org.apache.beam.sdk.transforms.DoFn;
 public class Utils {
 
 
-    public static class printElements extends DoFn<Object, Void> {
+    public static class PrintElements extends DoFn<Object, Void> {
 
         @ProcessElement
         public void processElement(ProcessContext context) {
