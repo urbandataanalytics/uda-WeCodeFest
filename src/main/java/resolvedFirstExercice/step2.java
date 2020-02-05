@@ -36,20 +36,6 @@ public class step2 {
     // Step: Write Data
 
     // Step: Execute Pipeline
-
-    // Step: Read Data
-
-    // Step: Multiply and Filter
-
-    // Step: get KV
-
-    // Step: Get average
-
-    // Step: Value to String
-
-    // Step: Write Data
-
-    // Step: Execute Pipeline
     p.run().waitUntilFinish();
 
   }
